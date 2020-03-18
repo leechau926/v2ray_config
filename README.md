@@ -1,2 +1,2 @@
 # v2ray_config
-websocket+tls
+nginx+websocket+tls
