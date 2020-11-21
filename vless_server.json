@@ -1,0 +1,54 @@
+{
+  "inbounds": [{
+    "port": 443,
+    "protocol": "vless",
+    "settings": {
+      "clients": [
+        {
+          "id": "",
+          "flow": "xtls-rprx-direct",
+          "level": 0
+        }
+      ],
+      "decryption": "none",
+      "fallbacks": [
+          {
+              "dest": 80
+          }
+      ]
+    },
+    "streamSettings": {
+        "network": "tcp",
+        "security": "xtls",
+        "xtlsSettings": {
+            "serverName": "www.google.com",
+            "alpn": [
+                "http/1.1"
+            ],
+            "certificates": [
+                {
+                    "certificateFile": "fullchain.pem",
+                    "keyFile": "privkey.pem"
+                }
+            ]
+        }
+    }
+  }],
+  "outbounds": [{
+    "protocol": "freedom",
+    "settings": {}
+  },{
+    "protocol": "blackhole",
+    "settings": {},
+    "tag": "blocked"
+  }],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:private"],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}
